@@ -1,0 +1,14 @@
+# -*- coding: utf-8 -*-
+
+import numpy as np
+import pandas as pd
+
+# Action1 count
+m = 2
+countAll = 0
+while m <= 100:
+    countAll = countAll + m
+    m = m + 2
+print(countAll)
+
+# The result is 2550
