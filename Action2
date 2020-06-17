@@ -1,0 +1,49 @@
+# -*- coding: utf-8 -*-
+
+import numpy as np
+import pandas as pd
+
+
+# Action2 class grades
+# get basic data
+gradeData = {'Chinese': [68, 95, 98, 90, 80], 'Math': [65, 76, 86, 88, 90], 'English': [30, 90, 88, 77, 90]}
+nameList = ['Zhang Fei', 'Guan Yu', 'Liu Bei', 'Dian Wei', 'Xu Chu']
+gradeChart = pd.DataFrame(gradeData, nameList, gradeData.keys())
+print(gradeChart)
+
+# Calculate the status
+meanClass = gradeChart.mean()
+minClass = gradeChart.min()
+maxClass = gradeChart.max()
+stdClass = gradeChart.std()
+varClass = gradeChart.var()
+
+# Generate new dataframe for status and sorting
+gradeStatus = pd.DataFrame([meanClass, minClass, maxClass, stdClass, varClass], index=['mean', 'min', 'max', 'std', 'var'])
+sumGrade = pd.DataFrame(gradeChart.sum(axis=1), columns=['Sum'])
+gradeChart = pd.merge(gradeChart, sumGrade, how='right', left_index=True, right_index=True)
+gradeChart = gradeChart.sort_values('Sum', ascending=False)
+print(gradeChart)
+print(gradeStatus)
+
+'''
+The Result
+           Chinese  Math  English
+Zhang Fei       68    65       30
+Guan Yu         95    76       90
+Liu Bei         98    86       88
+Dian Wei        90    88       77
+Xu Chu          80    90       90
+           Chinese  Math  English  Sum
+Liu Bei         98    86       88  272
+Guan Yu         95    76       90  261
+Xu Chu          80    90       90  260
+Dian Wei        90    88       77  255
+Zhang Fei       68    65       30  163
+         Chinese        Math     English
+mean   86.200000   81.000000   75.000000
+min    68.000000   65.000000   30.000000
+max    98.000000   90.000000   90.000000
+std    12.255611   10.440307   25.729361
+var   150.200000  109.000000  662.000000
+'''
